@@ -30,15 +30,20 @@ class UserInput(BaseModel):
 def predict_variety(data: UserInput):
 
     input_df = pd.DataFrame([{
-        'sepal length': data.sepal_length,
-        'sepal width': data.sepal_width,
-        'petal length': data.petal_length,
-        'petal width': data.petal_width
+    'sepal length (cm)': data.sepal_length,
+    'sepal width (cm)': data.sepal_width,
+    'petal length (cm)': data.petal_length,
+    'petal width (cm)': data.petal_width
     }])
 
     prediction = model.predict(input_df)[0]
+    prediction = int(prediction)  # or str(prediction)
+    # return {"predicted_category": prediction}
+    # prediction = model.predict(input_df)[0]
 
     return JSONResponse(status_code=200, content={'predicted_category': prediction})
+
+
 
 
 
