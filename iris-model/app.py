@@ -9,15 +9,7 @@ from model.predict import predict_output, MODEL_VERSION
 
 
 
-
 app = FastAPI()
-
-
-
-
-
-
-
 
 
 # huma readable
@@ -44,12 +36,19 @@ def predict_variety(data: UserInput):
     'petal width (cm)': data.petal_width
     }
 
-    prediction = predict_output(user_input)
-    prediction = int(prediction)  # or str(prediction)
-    # return {"predicted_category": prediction}
-    # prediction = model.predict(input_df)[0]
+    try:
 
-    return JSONResponse(status_code=200, content={'predicted_category': prediction})
+        prediction = predict_output(user_input)
+        prediction = int(prediction)  # or str(prediction)
+        # return {"predicted_category": prediction}
+        # prediction = model.predict(input_df)[0]
+
+        return JSONResponse(status_code=200, content={'predicted_category': prediction})
+    
+
+    except Exception as e:
+        return JSONResponse(status_code=500, content=str(e))
+
 
 
 
